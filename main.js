@@ -7,4 +7,5 @@ const btnCopy = document.getElementById('btn-copy');
 
 function encriptar(){
 
+
 }
