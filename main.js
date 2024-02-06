@@ -9,6 +9,9 @@ function notify(message, color) {
   Toastify({
     text: message,
     className: "info",
+    gravity: "top",
+    position: "center",
+    stopOnFocus: true,
     style: {
       background: color,
       borderRadius: "20px",
@@ -21,15 +24,6 @@ function notify(message, color) {
   }).showToast();
 }
 
-function quitarImagen() {
-  if (textoResultado.textContent.length > 0) {
-    textoVacio.style.display = "none";
-    notify("✅ Encriptado con exito", "#03C988");
-  } else {
-    textoVacio.style.display = "block";
-    notify("⚠️ Ingrese un texto", "#FF0000");
-  }
-}
 
 function encriptarTexto() {
   const reemplazoVocales = {
@@ -72,25 +66,27 @@ function limpiarTexto() {
   textoIngresado.value = "";
 }
 
-function validarTexto() {
-  if (textoIngresado.value == "") {
+function validarCampos(operacion) {
+  if (textoResultado.textContent.length > 0) {
+    textoVacio.style.display = "block";
     notify("⚠️ Ingrese un texto", "#FF0000");
+  } else {
+    textoVacio.style.display = "none";
+    notify(`✅ ${operacion} con exito`, "#03C988");
     return;
   }
 }
 
 btnEncriptar.addEventListener("click", () => {
+  validarCampos('Encriptado');
   encriptarTexto();
   limpiarTexto();
-  quitarImagen();
-//   notify("✅ Encriptado con exito", "#03C988");
 });
 
 btnDesencriptar.addEventListener("click", () => {
+  validarCampos('Desencriptado');
   desencriptarTexto();
   limpiarTexto();
-  quitarImagen();
-  notify("Desencriptado con exito", "#03C988");
 });
 
 btnCopiar.addEventListener("click", () => {
