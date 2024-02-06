@@ -41,6 +41,8 @@ function encriptarTexto() {
       (vocal) => reemplazoVocales[vocal.toLowerCase()] || vocal
     );
   textoResultado.textContent = textoModificado;
+  textoIngresado.value = "";
+
 }
 
 function desencriptarTexto() {
@@ -56,18 +58,17 @@ function desencriptarTexto() {
     .toLowerCase()
     .replace(/enter|imes|ai|ober|ufat/g, (clave) => reemplazoClaves[clave]);
   textoResultado.textContent = textoOriginal;
+  textoIngresado.value = "";
+
 }
 
 function copyToClipboard(texto) {
   return navigator.clipboard.writeText(texto);
 }
 
-function limpiarTexto() {
-  textoIngresado.value = "";
-}
 
 function validarCampos(operacion) {
-  if (textoResultado.textContent.length > 0) {
+  if (textoResultado.textContent.length <= 0) {
     textoVacio.style.display = "block";
     notify("⚠️ Ingrese un texto", "#FF0000");
   } else {
@@ -80,13 +81,11 @@ function validarCampos(operacion) {
 btnEncriptar.addEventListener("click", () => {
   validarCampos('Encriptado');
   encriptarTexto();
-  limpiarTexto();
 });
 
 btnDesencriptar.addEventListener("click", () => {
   validarCampos('Desencriptado');
   desencriptarTexto();
-  limpiarTexto();
 });
 
 btnCopiar.addEventListener("click", () => {
