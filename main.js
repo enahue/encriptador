@@ -24,8 +24,7 @@ function notify(message, color) {
   }).showToast();
 }
 
-
-function encriptarTexto() {
+function encriptarTexto(operacion) {
   const reemplazoVocales = {
     e: "enter",
     i: "imes",
@@ -40,12 +39,11 @@ function encriptarTexto() {
       /[aeiou]/g,
       (vocal) => reemplazoVocales[vocal.toLowerCase()] || vocal
     );
-  textoResultado.textContent = textoModificado;
-  textoIngresado.value = "";
-
+  notify(`✅ ${operacion} con exito`, "#03C988");
+  return textoModificado;
 }
 
-function desencriptarTexto() {
+function desencriptarTexto(operacion) {
   const reemplazoClaves = {
     enter: "e",
     imes: "i",
@@ -57,38 +55,55 @@ function desencriptarTexto() {
   const textoOriginal = textoUsuario
     .toLowerCase()
     .replace(/enter|imes|ai|ober|ufat/g, (clave) => reemplazoClaves[clave]);
-  textoResultado.textContent = textoOriginal;
-  textoIngresado.value = "";
-
+  notify(`✅ ${operacion} con exito`, "#03C988");
+  return textoOriginal;
 }
 
 function copyToClipboard(texto) {
-  return navigator.clipboard.writeText(texto);
-}
-
-
-function validarCampos(operacion) {
-  if (textoResultado.textContent.length <= 0) {
-    textoVacio.style.display = "block";
-    notify("⚠️ Ingrese un texto", "#FF0000");
-  } else {
-    textoVacio.style.display = "none";
-    notify(`✅ ${operacion} con exito`, "#03C988");
-    return;
+  if(textoResultado.textContent.length <= 0){
+    notify("⚠️ No hay texto para copiar", "#FF0000");
+  }else{
+    notify("❇️ Copiado al portapapeles", "#7F8487");
+    return navigator.clipboard.writeText(texto);
   }
 }
 
+function quitarImagen() {
+  if (textoIngresado.textContent.length <= 0) {
+    textoVacio.style.display = "none";
+    notify("esconder", "#03C988");
+    textoVacio.style.display = "block";
+  } else {
+    notify("⚠️ Ingrese un texto", "#FF0000");
+  }
+}
+
+
+
 btnEncriptar.addEventListener("click", () => {
-  validarCampos('Encriptado');
-  encriptarTexto();
+  if (textoIngresado.value.length > 0) {
+    textoResultado.textContent = encriptarTexto("Encriptado");
+    textoVacio.style.display = "none";
+    textoIngresado.value = "";
+  } else {
+    notify("⚠️ Ingrese un texto", "#FF0000");
+    textoVacio.style.display = "block";
+    textoResultado.textContent = "";
+  }
 });
 
 btnDesencriptar.addEventListener("click", () => {
-  validarCampos('Desencriptado');
-  desencriptarTexto();
+  if (textoIngresado.value.length > 0) {
+    textoResultado.textContent = desencriptarTexto("Desencriptado");
+    textoVacio.style.display = "none";
+    textoIngresado.value = "";
+  } else {
+    notify("⚠️ Ingrese un texto", "#FF0000");
+    textoVacio.style.display = "block";
+    textoResultado.textContent = "";
+  }
 });
 
 btnCopiar.addEventListener("click", () => {
   copyToClipboard(textoResultado.textContent);
-  notify("🟢 Copiado al portapapeles", "#7F8487");
 });

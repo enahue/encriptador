@@ -45,30 +45,33 @@ header {
   border-radius: 14px;
   cursor: pointer;
   font-size: 16px;
-  border: 2px solid #3071c1;
+  /* border: 2px solid #3071c1; */
 }
 
 .btn-encriptar {
   color: #ffffff;
-  background: #3071c1;
+  background: #00be0a;
   transition: transform 0.3s ease-in-out;
+  border: #00be0a;
 }
 
 .button-copy {
-  color: #3071c1;
+  color: #1058af;
   background: #d8dfe8;
   transition: all 0.3s ease-in-out;
   width: 90%;
   height: 50px;
   font-size: 20px;
-  border-radius: 5px;
+  border-radius: 15px;
   margin: auto;
 }
 
 .btn-desencriptar {
-  color: #3071c1;
-  background: #d8dfe8;
+  color: #ffffff;
+  background: #1955a3;
   transition: transform 0.3s ease-in-out;
+  border: #1955a3;
+
 }
 
 .button-copy:hover,
