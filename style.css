@@ -112,6 +112,7 @@ main {
 .panel-secundario {
   background: #ffffff;
   height: 500px;
+  max-width: 400PX;
   padding: 20px;
   box-shadow: 0px 0px 10px 0px #0000003d;
   border-radius: 32px;
@@ -119,6 +120,10 @@ main {
   justify-content: space-between;
   align-items: center;
   flex-direction: column;
+}
+
+.titulo-mensaje{
+  align-items: center;
 }
 
 .plano-diamante,
@@ -134,6 +139,15 @@ main {
   width: 386px;
   text-align: center;
   font-style: consolas;
+}
+footer{
+  display: flex;
+  justify-content: center;
+  padding: 3px;
+}
+footer a{
+  text-decoration: none;
+
 }
 
 @media screen and (max-width: 1000px) {

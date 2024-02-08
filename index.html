@@ -8,6 +8,8 @@
   <link rel="shortcut icon" href="./images/Logo.png" type="image/x-icon">
   <link rel="stylesheet" href="style.css">
   <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+
 </head>
 
 <body>
@@ -24,7 +26,7 @@
           Solo letras minúsculas y sin acentos
         </div>
         <div class="botones">
-          <button id="btn-encriptar" class="btn btn-encriptar">Encriptar</button>
+          <button id="btn-encriptar" onclick="encriptarTexto()" class="btn btn-encriptar">Encriptar</button>
           <button id="btn-desencriptar" class="btn btn-desencriptar">Desencriptar</button>
         </div>
       </div>
@@ -32,9 +34,9 @@
     <section class="panel-secundario">
       <div class="plano-diamante">
         <div id="validacion-texto">
-          <img src="./images/Muñeco.png" alt="imagen" class="diamond">
-          <h2>Ningún mensaje fue encontrado</h2>
-          <p>Ingresa el texto que deseas encriptar o desencriptar.</p>
+          <img src="./images/Muñeco.png" alt="imagen" class="diamond" id="imagen-mensaje">
+          <h2 id="s-mensaje" class="titulo-mensaje">Ningún mensaje fue encontrado</h2>
+          <p id="texto-mensaje">Ingresa el texto que deseas encriptar o desencriptar.</p>
         </div>
         <p id="texto-resultado"></p>
       </div>
@@ -46,5 +48,8 @@
   <script src="main.js" defer></script>
   <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
 </body>
+<footer>
+  <p>Development with ❤️ by <a href="https://enahue.vercel.app" target="_blank"> Erwin Nahue </a> </p>
+</footer>
 
 </html>

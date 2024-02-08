@@ -3,7 +3,11 @@ const textoResultado = document.getElementById("texto-resultado");
 const btnEncriptar = document.getElementById("btn-encriptar");
 const btnDesencriptar = document.getElementById("btn-desencriptar");
 const textoVacio = document.getElementById("validacion-texto");
+const imagenMensage = document.getElementById("imagen-mensaje");
 const btnCopiar = document.getElementById("btn-copiar");
+const sMensaje = document.getElementById("s-mensaje");
+const textoMensaje = document.getElementById("texto-mensaje");
+const excluded = /[~!@#$%^&*()_+|}{[\]\\\/?><:"`;.,áéíóúàèìòù'ñÑA-Z]/g;
 
 function notify(message, color) {
   Toastify({
@@ -24,7 +28,8 @@ function notify(message, color) {
   }).showToast();
 }
 
-function encriptarTexto(operacion) {
+function encriptarTexto() {
+  if(validarCampos(textoIngresado.value)){
   const reemplazoVocales = {
     e: "enter",
     i: "imes",
@@ -39,8 +44,11 @@ function encriptarTexto(operacion) {
       /[aeiou]/g,
       (vocal) => reemplazoVocales[vocal.toLowerCase()] || vocal
     );
-  notify(`✅ ${operacion} con exito`, "#03C988");
-  return textoModificado;
+  textoVacio.style.display = "none";
+  textoIngresado.value = "";
+  notify(`✅ Encriptado con exito`, "#03C988");
+  textoResultado.textContent =  textoModificado;
+    }
 }
 
 function desencriptarTexto(operacion) {
@@ -79,18 +87,47 @@ function quitarImagen() {
 }
 
 
-
-btnEncriptar.addEventListener("click", () => {
-  if (textoIngresado.value.length > 0) {
-    textoResultado.textContent = encriptarTexto("Encriptado");
-    textoVacio.style.display = "none";
-    textoIngresado.value = "";
-  } else {
-    notify("⚠️ Ingrese un texto", "#FF0000");
-    textoVacio.style.display = "block";
-    textoResultado.textContent = "";
+function validarCampos(inputText) {
+  if(inputText == "" ) {
+      // notify("⚠️ Ingrese un texto", "#FF0000");
+      sMensaje.style.display = "block";
+    // sMensaje.textContent = "Ningún mensaje fue encontrado";
+      textoVacio.style.display = "block";
+      textoResultado.textContent = "";
+      return false;
   }
-});
+
+  if(inputText.match(excluded)) {
+    // notify("⚠️ Se detectó texto con caracteres especiales", "#FF0000");
+    
+    sMensaje.style.color= "red";
+    sMensaje.innerHTML = "<span class='bi bi-exclamation-octagon'></span> Error, no fue posible encriptar";
+    // imagenMensage.style.display = "none";
+    // sMensaje.style.display = "none";
+    textoMensaje.style.display = "flex";
+    textoMensaje.style.color = "orange";
+    textoMensaje.textContent = "Las mayusculas, simbolos y caracteres especiales (incluidos acentos o similares) estan excluidos, por favor remueve esos caracteres e intenta de nuevo.";
+    textoIngresado.value ="";
+      return false;
+  }
+  
+  return true;
+}
+
+
+
+// btnEncriptar.addEventListener("click", () => {
+//   // if (textoIngresado.value.length > 0) {
+//   //   textoResultado.textContent = encriptarTexto("Encriptado");
+//   //   textoVacio.style.display = "none";
+//   //   textoIngresado.value = "";
+//   // } else {
+//   //   notify("⚠️ Ingrese un texto", "#FF0000");
+//   //   textoVacio.style.display = "block";
+//   //   textoResultado.textContent = "";
+//   // }
+//     textoResultado.textContent = encriptarTexto();
+// });
 
 btnDesencriptar.addEventListener("click", () => {
   if (textoIngresado.value.length > 0) {
