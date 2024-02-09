@@ -29,7 +29,7 @@ function notify(message, color) {
 }
 
 function encriptarTexto() {
-  if(validarCampos(textoIngresado.value)){
+  if(validarCampos(textoIngresado.value, "encriptar")){
   const reemplazoVocales = {
     e: "enter",
     i: "imes",
@@ -51,7 +51,8 @@ function encriptarTexto() {
     }
 }
 
-function desencriptarTexto(operacion) {
+function desencriptarTexto() {
+  if(validarCampos(textoIngresado.value, "desencriptar")){
   const reemplazoClaves = {
     enter: "e",
     imes: "i",
@@ -63,47 +64,37 @@ function desencriptarTexto(operacion) {
   const textoOriginal = textoUsuario
     .toLowerCase()
     .replace(/enter|imes|ai|ober|ufat/g, (clave) => reemplazoClaves[clave]);
-  notify(`✅ ${operacion} con exito`, "#03C988");
-  return textoOriginal;
+  textoVacio.style.display = "none";
+  textoIngresado.value = "";
+  notify(`✅ Desencriptado con exito`, "#03C988");
+  textoResultado.textContent =  textoOriginal;
+}
 }
 
-function copyToClipboard(texto) {
+function copyToClipboard() {
   if(textoResultado.textContent.length <= 0){
     notify("⚠️ No hay texto para copiar", "#FF0000");
   }else{
     notify("❇️ Copiado al portapapeles", "#7F8487");
-    return navigator.clipboard.writeText(texto);
+    return navigator.clipboard.writeText(textoResultado.textContent);
   }
 }
 
-function quitarImagen() {
-  if (textoIngresado.textContent.length <= 0) {
-    textoVacio.style.display = "none";
-    notify("esconder", "#03C988");
-    textoVacio.style.display = "block";
-  } else {
-    notify("⚠️ Ingrese un texto", "#FF0000");
-  }
-}
-
-
-function validarCampos(inputText) {
+function validarCampos(inputText, operacion) {
   if(inputText == "" ) {
-      // notify("⚠️ Ingrese un texto", "#FF0000");
+      sMensaje.style.color= "black";
+      textoMensaje.style.color= "black";
       sMensaje.style.display = "block";
-    // sMensaje.textContent = "Ningún mensaje fue encontrado";
       textoVacio.style.display = "block";
       textoResultado.textContent = "";
+      sMensaje.innerHTML ="Ningún mensaje fue encontrado";
+      textoMensaje.innerHTML ="Ingresa el texto que deseas encriptar o desencriptar.";
       return false;
   }
 
   if(inputText.match(excluded)) {
-    // notify("⚠️ Se detectó texto con caracteres especiales", "#FF0000");
-    
     sMensaje.style.color= "red";
-    sMensaje.innerHTML = "<span class='bi bi-exclamation-octagon'></span> Error, no fue posible encriptar";
-    // imagenMensage.style.display = "none";
-    // sMensaje.style.display = "none";
+    sMensaje.innerHTML = "<span class='bi bi-exclamation-octagon'></span> Error, no fue posible " + operacion;
     textoMensaje.style.display = "flex";
     textoMensaje.style.color = "orange";
     textoMensaje.textContent = "Las mayusculas, simbolos y caracteres especiales (incluidos acentos o similares) estan excluidos, por favor remueve esos caracteres e intenta de nuevo.";
@@ -113,34 +104,3 @@ function validarCampos(inputText) {
   
   return true;
 }
-
-
-
-// btnEncriptar.addEventListener("click", () => {
-//   // if (textoIngresado.value.length > 0) {
-//   //   textoResultado.textContent = encriptarTexto("Encriptado");
-//   //   textoVacio.style.display = "none";
-//   //   textoIngresado.value = "";
-//   // } else {
-//   //   notify("⚠️ Ingrese un texto", "#FF0000");
-//   //   textoVacio.style.display = "block";
-//   //   textoResultado.textContent = "";
-//   // }
-//     textoResultado.textContent = encriptarTexto();
-// });
-
-btnDesencriptar.addEventListener("click", () => {
-  if (textoIngresado.value.length > 0) {
-    textoResultado.textContent = desencriptarTexto("Desencriptado");
-    textoVacio.style.display = "none";
-    textoIngresado.value = "";
-  } else {
-    notify("⚠️ Ingrese un texto", "#FF0000");
-    textoVacio.style.display = "block";
-    textoResultado.textContent = "";
-  }
-});
-
-btnCopiar.addEventListener("click", () => {
-  copyToClipboard(textoResultado.textContent);
-});

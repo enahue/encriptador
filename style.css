@@ -122,10 +122,6 @@ main {
   flex-direction: column;
 }
 
-.titulo-mensaje{
-  align-items: center;
-}
-
 .plano-diamante,
 .copy-section {
   width: 100%;
